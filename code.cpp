@@ -1,4 +1,4 @@
-// CPP program to detects face in a video 
+// CPP program to detect face in a video 
 // Program Developed by Roshan Lamichhane
 // Include required header files from OpenCV directory 
 #include "/usr/local/include/opencv2/objdetect.hpp" 
