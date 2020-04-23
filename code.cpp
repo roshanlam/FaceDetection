@@ -10,12 +10,10 @@ using namespace std;
 using namespace cv; 
 
 // Function for Face Detection 
-void detectAndDraw( Mat& img, CascadeClassifier& cascade, 
-				CascadeClassifier& nestedCascade, double scale ); 
+void detectAndDraw( Mat& img, CascadeClassifier& cascade, CascadeClassifier& nestedCascade, double scale ); 
 string cascadeName, nestedCascadeName; 
 
-int main( int argc, const char** argv ) 
-{ 
+int main( int argc, const char** argv ) { 
 	// VideoCapture class for playing video for which faces to be detected 
 	VideoCapture capture; 
 	Mat frame, image; 
@@ -32,12 +30,10 @@ int main( int argc, const char** argv )
 
 	// Start Video..1) 0 for WebCam 2) "Path to Video" for a Local Video 
 	capture.open(0); 
-	if( capture.isOpened() ) 
-	{ 
+	if( capture.isOpened() ) { 
 		// Capture frames from video and detect faces 
 		cout << "Face Detection Started...." << endl; 
-		while(1) 
-		{ 
+		while(1) { 
 			capture >> frame; 
 			if( frame.empty() ) 
 				break; 
@@ -55,10 +51,7 @@ int main( int argc, const char** argv )
 	return 0; 
 } 
 
-void detectAndDraw( Mat& img, CascadeClassifier& cascade, 
-					CascadeClassifier& nestedCascade, 
-					double scale) 
-{ 
+void detectAndDraw( Mat& img, CascadeClassifier& cascade, CascadeClassifier& nestedCascade, double scale) { 
 	vector<Rect> faces, faces2; 
 	Mat gray, smallImg; 
 
@@ -74,8 +67,7 @@ void detectAndDraw( Mat& img, CascadeClassifier& cascade,
 							2, 0|CASCADE_SCALE_IMAGE, Size(30, 30) ); 
 
 	// Draw circles around the faces 
-	for ( size_t i = 0; i < faces.size(); i++ ) 
-	{ 
+	for ( size_t i = 0; i < faces.size(); i++ ) { 
 		Rect r = faces[i]; 
 		Mat smallImgROI; 
 		vector<Rect> nestedObjects; 
@@ -84,8 +76,7 @@ void detectAndDraw( Mat& img, CascadeClassifier& cascade,
 		int radius; 
 
 		double aspect_ratio = (double)r.width/r.height; 
-		if( 0.75 < aspect_ratio && aspect_ratio < 1.3 ) 
-		{ 
+		if( 0.75 < aspect_ratio && aspect_ratio < 1.3 ) { 
 			center.x = cvRound((r.x + r.width*0.5)*scale); 
 			center.y = cvRound((r.y + r.height*0.5)*scale); 
 			radius = cvRound((r.width + r.height)*0.25*scale); 
@@ -104,8 +95,7 @@ void detectAndDraw( Mat& img, CascadeClassifier& cascade,
 										0|CASCADE_SCALE_IMAGE, Size(30, 30) ); 
 		
 		// Draw circles around eyes 
-		for ( size_t j = 0; j < nestedObjects.size(); j++ ) 
-		{ 
+		for ( size_t j = 0; j < nestedObjects.size(); j++ ) { 
 			Rect nr = nestedObjects[j]; 
 			center.x = cvRound((r.x + nr.x + nr.width*0.5)*scale); 
 			center.y = cvRound((r.y + nr.y + nr.height*0.5)*scale); 
